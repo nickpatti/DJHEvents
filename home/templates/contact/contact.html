@@ -1,0 +1,15 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block postaction %}
+<a class="nav-link" style="color: {{ home.nav_bar_text_colour }};" href="{% url 'contact-update' contact.id %}">Update Contact</a>
+{% endblock %}
+{% block event %}
+<section class="home-slider owl-carousel">
+
+    <div class="contact-container" style="margin-top: 15vh; margin-bottom: 11.5vh">
+        <h4 class="mb-10">{{ contact.contact_text|safe }}</h4>
+    </div>
+
+</section>
+{% endblock %}
+

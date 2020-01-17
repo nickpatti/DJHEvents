@@ -1,0 +1,50 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block postaction %}
+<a class="nav-link" style="color: {{ home.nav_bar_text_colour }};" href="{% url 'home-update' home.id %}">Update Home Page</a>
+{% endblock %}
+{% block event %}
+
+<div class="page-wrap">
+  <section class="home-slider owl-carousel">
+    <div id="image_preview" style="background-image: url('{{ home.background_image.url }}');">
+
+      <div class="container">
+        <div class="row image-text align-items-center justify-content-center">
+          <div class="col-md-7 text-center col-sm-12 element-animate">
+            <h1 style="color: {{ home.title_colour }}">{{ home.title }}</h1>
+            <p class="mb-3">{{ home.text_over_image|safe }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-container" style="background-color: {{home.website_body_colour}};">
+    {% for eventtype in events %}
+        <a href="{% url 'event-detail' eventtype.id %}"><button class="btn-style mb-10" style="background-color: {{ eventtype.colour }};">{{ eventtype.title }}</button></a>
+    {% endfor %}
+    </div>
+    {% if home.text_box_background_image %}
+
+      <div class="content-container" style="margin-bottom: 7vh; background-image: url('{{ home.text_box_background_image.url }}');">
+        <h2>{{ home.title }}</h2>
+        <p class="mb-3 align-items-center justify-content-center">{{ home.content|safe }}</p>
+      </div>
+
+    {% else %}
+
+      <div class="content-container {{ home.text_box_colour }}" style="margin-bottom: 7vh; padding-bottom: 10vh background-color: {{ home.text_box_colour }}">
+        <h2>{{ home.title }}</h2>
+        <p class="mb-3 align-items-center justify-content-center">{{ home.content|safe }}</p>
+      </div>
+
+    {% endif %}
+  </section>
+
+</div>
+
+
+
+{% endblock %}
+

@@ -1,0 +1,23 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block postaction %}
+{% if user.is_superuser %}
+<a class="nav-link" style="color: {{ home.nav_bar_text_colour }};" href="{% url 'contact-update' contact.id %}">Update Contact</a>
+{% endif %}
+{% endblock %}
+{% block event %}
+<section class="home-slider owl-carousel">
+{% for contactpost in contacts %}
+
+<!--     <div class="content-container">
+          <a href="{% url 'contact-detail' contactpost.id %}"><h1>{{ contactpost.title }}</h1></a>
+          <p class="mb-3">{{ contactpost.contact_text|safe }}</p>
+    </div> -->
+    <div class="contact-container" style="margin-top: 15vh; margin-bottom: 11.5vh">
+        <h4 class="mb-10">{{ contactpost.contact_text|safe }}</h4>
+    </div>
+
+{% endfor %}
+</section>
+{% endblock %}
+

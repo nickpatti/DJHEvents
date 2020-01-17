@@ -1,0 +1,23 @@
+{% extends "home/base.html" %}
+{% load crispy_forms_tags %}
+{% block event %}
+
+    <div class="content-section">
+        <form action="" method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom bm-4">Update Home Page</legend>
+                {% crispy form %}
+            </fieldset>
+<!--             <div class="form-group">
+
+            </div> -->
+        </form>
+    </div>
+
+    <script type="text/javascript">
+     window.addEventListener("load", Hide);</script>
+     <script type="text/javascript">
+     var el = document.getElementById("div_id_weigth_type");
+     el.addEventListener("click", Hide);</script>
+{% endblock %}

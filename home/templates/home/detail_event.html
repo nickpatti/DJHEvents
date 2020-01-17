@@ -1,0 +1,151 @@
+{% extends "home/base.html" %}
+{% block css %}
+
+<style>
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  border-radius: 0px 20px 0px 0px;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+</style>
+{% endblock %}
+{% load static %}
+{% block postaction %}
+<a class="nav-link" style="color: {{ home.nav_bar_text_colour }};" href="{% url 'event-create' %}">Add Event</a>
+{% endblock %}
+{% block event %}
+
+<section class="home-slider owl-carousel">
+  {% if eventtype.background_image %}
+    <div id="image_preview" style="margin-bottom: 1vh; background-image: url('{{ eventtype.background_image.url }}');">
+      <div class="container">
+        <div class="row image-text align-items-center justify-content-center">
+          <div class="col-md-7 text-center col-sm-8 element-animate">
+            <p class="mb-3">{{ eventtype.text_over_image|safe }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="container">
+      <div class="row image-text align-items-center justify-content-center">
+        <div class="col-md-7 text-center col-sm-8 element-animate">
+          <p class="mb-3">{{ eventtype.text_over_image|safe }}</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+
+  <div class="btn-container">
+    {% for eventtype in events %}
+      <a href="{% url 'event-detail' eventtype.id %}"><button class="btn-style mb-10" style="background-color: {{ eventtype.colour }};">{{ eventtype.title }}</button></a>
+    {% endfor %}
+  </div>
+
+  {% if eventtype.text_box_background_image %}
+
+    <div class="content-container" style="margin-bottom: 7vh; background-image: url('{{ eventtype.text_box_background_image.url }}');">
+
+
+  {% else %}
+
+    <div class="content-container" style="background-color: {{ eventtype.colour }};">
+
+  {% endif %}
+
+    {% if user.is_staff %}
+      <a class="btn btn-secondary btn-sm mt-1 mb-1" style='float; right' href="{% url 'event-update' object.id %}">Update</a>
+      <a class="btn btn-danger btn-sm mt-1 mb-1" style='float; right' href="{% url 'event-delete' object.id %}">Delete</a>
+
+
+    {% endif %}
+
+
+    {% if eventtype.text_box_background_image %}
+      <div class="tab" style="background-image: url('{{ eventtype.text_box_background_image.url }}'); border-width: 0px">
+    {% else %}
+      <div class="tab" style="background-color: {{ eventtype.colour }};">
+    {% endif %}
+      {% if eventtype.subsection_name1 %}
+        <button class="tablinks" onclick="openCity(event, '{{ eventtype.title }} Home')" id="defaultOpen">{{ eventtype.title }} Home</button>
+      {% else %}
+        <h3>{{ eventtype.title }}</h3>
+        <p>{{ eventtype.content|safe }}</p>
+      {% endif %}
+      {% if eventtype.subsection_name1 %}
+        <button class="tablinks" onclick="openCity(event, '{{ eventtype.subsection_name1 }}')">{{ eventtype.subsection_name1 }}</button>
+      {% endif %}
+      {% if eventtype.subsection_name2 %}
+        <button class="tablinks" onclick="openCity(event, '{{ eventtype.subsection_name2 }}')">{{ eventtype.subsection_name2 }}</button>
+      {% endif %}
+      {% if eventtype.subsection_name3 %}
+        <button class="tablinks" onclick="openCity(event, '{{ eventtype.subsection_name3 }}')">{{ eventtype.subsection_name3 }}</button>
+      {% endif %}
+      {% if eventtype.subsection_name4 %}
+        <button class="tablinks" onclick="openCity(event, '{{ eventtype.subsection_name4 }}')">{{ eventtype.subsection_name4 }}</button>
+      {% endif %}
+    </div>
+
+    <div id="{{ eventtype.title }} Home" class="tabcontent" style="border-width: 0px">
+      <h3>{{ eventtype.title }}</h3>
+      <p>{{ eventtype.content|safe }}</p>
+    </div>
+
+    <div id="{{ eventtype.subsection_name1 }}" class="tabcontent" style="border-width: 0px">
+      <h3>{{ eventtype.subsection_name1 }}</h3>
+      <p>{{ eventtype.subsection_content1|safe }}</p>
+    </div>
+
+    <div id="{{ eventtype.subsection_name2 }}" class="tabcontent" style="border-width: 0px">
+      <h3>{{ eventtype.subsection_name2 }}</h3>
+      <p>{{ eventtype.subsection_content2|safe }}</p>
+    </div>
+
+    <div id="{{ eventtype.subsection_name3 }}" class="tabcontent" style="border-width: 0px">
+      <h3>{{ eventtype.subsection_name3 }}</h3>
+      <p>{{ eventtype.subsection_content3|safe }}</p>
+    </div>
+
+    <div id="{{ eventtype.subsection_name4 }}" class="tabcontent" style="border-width: 0px">
+      <h3>{{ eventtype.subsection_name4 }}</h3>
+      <p>{{ eventtype.subsection_content4|safe }}</p>
+    </div>
+
+  </div>
+</div>
+</div>
+
+</section>
+{% endblock %}
+

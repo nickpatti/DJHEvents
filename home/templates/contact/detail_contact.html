@@ -1,0 +1,14 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block event %}
+<section class="home-slider owl-carousel">
+    <div class="contact-container">
+        {% if user.is_staff %}
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" style='text-align: center;' href="{% url 'contact-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" style='text-align: center;' href="{% url 'contact-delete' object.id %}">Delete</a>
+        {% endif %}
+        <a><h1>{{ contactpost.title }}</h1></a>
+        <p class="mb-10">{{ contactpost.contact_text|safe }}</p>
+    </div>
+</section>
+{% endblock %}

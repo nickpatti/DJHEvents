@@ -1,0 +1,64 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block postaction %}
+<a class="nav-link" href="{% url 'event-create' %}">Add Event</a>
+{% endblock %}
+{% block event %}
+
+<section class="home-slider owl-carousel">
+      <div id="image_preview" style="margin-bottom: 1vh; background-image: url('{{ eventtype.background_image.url }}');">
+
+        <div class="container">
+          <div class="row image-text align-items-center justify-content-center">
+            <div class="col-md-7 text-center col-sm-8 element-animate">
+              <h1>{{ eventtype.title }}</h1>
+              <p class="mb-3">{{ eventtype.text_over_image|safe }}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="btn-container">
+      {% for eventtype in events %}
+        {% if eventtype.button_image %}
+        <a href="{% url 'event-detail' eventtype.id %}"><button class="btn-style bg-{{ eventtype.colour }}"><img src='{{ eventtype.button_image.url }}'>{{ eventtype.title }}</button></a>
+        {% else %}
+          <a href="{% url 'event-detail' eventtype.id %}"><button class="btn-style mb-10 bg-{{ eventtype.colour }}">{{ eventtype.title }}</button></a>
+        {% endif %}
+      {% endfor %}
+      </div>
+      <div class="content-container bg-{{ eventtype.colour }}">
+
+        {% if user.is_staff %}
+          <a class="btn btn-secondary btn-sm mt-1 mb-1" style='float; right' href="{% url 'event-update' object.id %}">Update</a>
+          <a class="btn btn-danger btn-sm mt-1 mb-1" style='float; right' href="{% url 'event-delete' object.id %}">Delete</a>
+          <!-- <a class="btn btn-danger btn-sm mt-1 mb-1" style='float; right' href="{% url 'event-delete' object.id %}">Add Subsection</a> -->
+
+        {% endif %}
+        <h2>{{ eventtype.title }}</h2>
+        {% block event_subdiv %}
+        {% include "partials/subdiv_4.html" %}
+        {% endblock %}
+
+      </div>
+
+      <div class="sub-btn-container">
+        {% if eventtype.subsection_name1 %}
+          <a href="{% url 'event-detail' object.id %}"><button class="sub-btn-style mb-10 bg-{{ eventtype.colour }}">{{ eventtype.title }} Home</button></a>
+          <a href="{% url 'sub1' object.id %}"><button class="sub-btn-style mb-10 bg-{{ eventtype.colour }}">{{ eventtype.subsection_name1 }}</button></a>
+        {% endif %}
+        {% if eventtype.subsection_name2 %}
+          <a href="{% url 'sub2' object.id %}"><button class="sub-btn-style mb-10 bg-{{ eventtype.colour }}">{{ eventtype.subsection_name2 }}</button></a>
+        {% endif %}
+        {% if eventtype.subsection_name3 %}
+          <a href="{% url 'sub3' object.id %}"><button class="sub-btn-style mb-10 bg-{{ eventtype.colour }}">{{ eventtype.subsection_name3 }}</button></a>
+        {% endif %}
+        {% if eventtype.subsection_name4 %}
+          <a href="{% url 'sub4' object.id %}"><button class="sub-btn-style mb-10 bg-{{ eventtype.colour }}">{{ eventtype.subsection_name4 }}</button></a>
+        {% endif %}
+      </div>
+
+</section>
+{% endblock %}
+<!-- {% url 'sub-detail' eventsubsection.id %}
+{% url 'sub-detail' eventsubsection.id %} -->

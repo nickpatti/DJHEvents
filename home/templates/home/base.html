@@ -1,0 +1,89 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <title>DJH Events</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'home/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/main.css' %}">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-tab.js' %}"></script>
+
+    {% block css %}
+    {% endblock %}
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('#tabs').tab();
+        });
+    </script>
+    {% block java %}
+    {% endblock %}
+
+    <script type="text/javascript" src="{% static 'js/detail-tab.js' %}"></script>
+
+
+
+
+
+  </head>
+  <body onload="document.getElementById('defaultOpen').click();" style="background-color: {{home.website_body_colour}};">
+    <div class="page-wrap">
+      <div id="fb-root"></div>
+      <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v4.0"></script>
+        <header role="banner">
+          <nav class="navbar navbar-expand-md navbar-dark" style="background-color: {{ home.top_bar_colour }}">
+            <div class="container">
+              <a class="navbar-brand" style="color: {{ home.brand_colour }};" href="{% url 'home' %}">DJH Events</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarsExample05">
+                <ul class="navbar-nav ml-auto pl-lg-5 pl-0">
+                  <li class="nav-item">
+                    <a class="nav-link" style="color: {{ home.nav_bar_text_colour }};" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="color: {{ home.nav_bar_text_colour }};" href="{% url 'gallery:album_list' %}">Gallery</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="color: {{ home.nav_bar_text_colour }};" href="{% url 'contact' %}">Contact</a>
+                  </li>
+                </ul>
+
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item cta-btn">
+                    {% if user.is_staff %}
+                    {% block postaction %}
+                    {% endblock %}
+                    {% endif %}
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+          </nav>
+        </header>
+        <!-- END header -->
+
+
+        {% block event %}
+        {% endblock %}
+
+        <div id="content">
+
+    {% block content %}
+    {% endblock %}
+        </div>
+      </div>
+    <footer class="site-footer" style="background-color: {{ home.footer_colour }}; bottom: 0;">
+      <div class="fb-like" data-href="https://www.facebook.com/DJH-DISCO-the-music-you-want-to-hear-157418121774509/?epa=SEARCH_BOX" data-width="" data-layout="button" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+      <h6 style="text-align: right; margin-right: 40px; color: {{ home.nav_bar_text_colour }};">Website created by <a href="{% url 'my-contact' %}">Nick Patti</a></h6>
+    </footer>
+  </body>
+</html>
